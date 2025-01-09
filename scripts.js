@@ -24,7 +24,6 @@ function toggleDescription() {
     }
 }
 
-
 // Update quantity
 function updateQuantity(change) {
     let quantity = Math.max(0, parseInt(document.getElementById("quantity").value) + change);
@@ -61,18 +60,7 @@ function addToVariantList() {
     }
 
     resetOptions();
-	document.getElementById("options").style.display = "none"; // Hide dropdowns
-}
-
-// Show dropdown options when quantity > 0
-function handleQuantityChange(quantity) {
-    const options = document.getElementById("options");
-    if (quantity > 0) {
-        options.style.display = "block";
-    } else {
-        options.style.display = "none"; // Hide options if quantity is 0
-        resetOptions();
-    }
+    document.getElementById("options").style.display = "none"; // Hide dropdowns
 }
 
 // Reset options after adding
@@ -91,7 +79,7 @@ function isValidEmail(email) {
 // Proceed to checkout (Validate email and integrate RazorPay)
 function proceedToCheckout() {
     let email = document.getElementById("email").value;
-    
+
     if (isValidEmail(email)) {
         // Prepare order details
         let orderDetails = {
@@ -108,7 +96,7 @@ function proceedToCheckout() {
         }
 
         // Send the collected data to the backend using fetch
-        fetch('https://my-flask-app-u15p.onrender.com', {
+        fetch('https://your-backend-url.onrender.com/checkout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -120,11 +108,11 @@ function proceedToCheckout() {
             if (data.success) {
                 // On success, notify the user and provide the download URL
                 alert("Order details have been saved. You can download the file now.");
-                
+
                 // Create a download link for the file (the backend sends the file URL)
                 let downloadLink = document.createElement("a");
                 downloadLink.href = data.fileUrl;  // URL of the file from backend
-                downloadLink.download = "order_details.txt";  // Name of the downloaded file
+                downloadLink.download = "emails.txt";  // Name of the downloaded file
                 downloadLink.click();  // Trigger the download
             } else {
                 alert("There was an issue with processing your order.");
@@ -138,8 +126,6 @@ function proceedToCheckout() {
         alert("Please enter a valid email address.");
     }
 }
-
-
 
 // Check Add button when options change
 document.getElementById("size").addEventListener("change", checkAddButton);
