@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>ITEMS</h1>
+    </header>
+
+    <!-- Product Display Section -->
+    <div class="product-container">
+        <h2>Strawberry Chocolate</h2>
+        <img src="product.jpg" alt="Strawberry Chocolate">
+		<!-- Product Description -->
+    <div class="product-description">
+        <p id="shortDescription">Fresh strawberries drizzled with rich melted chocolate — pure bliss! <span id="dots">...</span></p>
+        <p id="fullDescription" style="display: none;">Ingredients:<br>-Fresh Strawberries,<br>-Melted Couverture Chocolate<br>-Salted Butter<br>Calories:<br>-around kcal</p>
+        <button id="toggleDescription" onclick="toggleDescription()">Show Details</button>
+    </div>
+        <h3>Rs.200 onwards*</h3>
+
+        <!-- Quantity Selector -->
+        <div class="quantity-selector">
+            <label for="quantity">Quantity:</label>
+            <button id="decrease" onclick="updateQuantity(-1)">-</button>
+            <input type="number" id="quantity" value="0" min="0" readonly>
+            <button id="increase" onclick="updateQuantity(1)">+</button>
+        </div>
+
+        <!-- Options (Initially hidden) -->
+        <div id="options" class="options" style="display: none;">
+            <label for="size">Size:</label>
+            <select id="size">
+                <option value="">Select Size</option>
+                <option value="Regular">Regular</option>
+                <option value="Large">Large</option>
+                <option value="Extra-Large">Extra-Large</option>
+            </select>
+
+            <label for="chocolateType">Chocolate Type:</label>
+            <select id="chocolateType">
+                <option value="">Select Chocolate Type</option>
+                <option value="Milk Chocolate">Milk Chocolate</option>
+                <option value="Dark Chocolate">Dark Chocolate</option>
+                <option value="White Chocolate">White Chocolate</option>
+            </select>
+
+            <button id="addButton" class="add-button" onclick="addToVariantList()" disabled>Add</button>
+        </div>
+
+        <!-- Variant List -->
+        <div class="variant-list" id="variantList"></div>
+
+        <!-- Total Price Display -->
+        <div id="totalPrice">Total: ₹0</div>
+    </div>
+
+    <!-- Email and Checkout Section -->
+    <div class="checkout-section">
+        <input type="email" id="email" placeholder="Enter your email*" required>
+        <button onclick="proceedToCheckout()">Proceed to Checkout</button>
+    </div>
+
+    <script src="scripts.js"></script> <!-- Link to the JavaScript file -->
+</body>
+</html>
