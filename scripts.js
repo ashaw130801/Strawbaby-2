@@ -33,8 +33,13 @@ function updateQuantity(change) {
 
 // Show dropdown options when quantity > 0
 function handleQuantityChange(quantity) {
-    document.getElementById("options").style.display = quantity > 0 ? "block" : "none";
-    if (quantity === 0) resetOptions();
+    const options = document.getElementById("options");
+    if (quantity > 0) {
+        options.style.display = "block";
+    } else {
+        options.style.display = "none"; // Hide options if quantity is 0
+        resetOptions();
+    }
 }
 
 // Enable Add button when both options are selected
@@ -77,9 +82,9 @@ function isValidEmail(email) {
 }
 
 // Proceed to checkout (Validate email and integrate RazorPay)
-function proceedToCheckout() {
+async function proceedToCheckout() {
     let email = document.getElementById("email").value;
-
+    
     if (isValidEmail(email)) {
         // Prepare order details
         let orderDetails = {
@@ -96,32 +101,33 @@ function proceedToCheckout() {
         }
 
         // Send the collected data to the backend using fetch
-        fetch('https://my-flask-app-u15p.onrender.com/checkout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(orderDetails)  // Send the order details as JSON
-        })
-        .then(response => response.json())  // Parse response as JSON
-        .then(data => {
+        try {
+            const response = await fetch('https://my-flask-app-u15p.onrender.com/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderDetails)  // Send the order details as JSON
+            });
+
+            const data = await response.json();  // Parse response as JSON
+
             if (data.success) {
                 // On success, notify the user and provide the download URL
                 alert("Order details have been saved. You can download the file now.");
-
+                
                 // Create a download link for the file (the backend sends the file URL)
                 let downloadLink = document.createElement("a");
                 downloadLink.href = data.fileUrl;  // URL of the file from backend
-                downloadLink.download = "emails.txt";  // Name of the downloaded file
+                downloadLink.download = "order_details.txt";  // Name of the downloaded file
                 downloadLink.click();  // Trigger the download
             } else {
                 alert("There was an issue with processing your order.");
             }
-        })
-        .catch(error => {
+        } catch (error) {
             console.error('Error:', error);
             alert("An error occurred while processing your order.");
-        });
+        }
     } else {
         alert("Please enter a valid email address.");
     }
