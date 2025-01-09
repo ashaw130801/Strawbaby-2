@@ -96,7 +96,7 @@ function proceedToCheckout() {
         }
 
         // Send the collected data to the backend using fetch
-        fetch('https://your-backend-url.onrender.com/checkout', {
+        fetch('https://my-flask-app-u15p.onrender.com/checkout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
